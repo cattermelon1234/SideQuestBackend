@@ -36,8 +36,26 @@ const createLocation = async(req, res) => {
   }
 }
 
+//delete location
+const deleteLocation = async(req, res) => {
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({error: 'No such location'})
+  }
+
+  const location = await Location.findOneAndDelete({_id: id})
+
+  if (!location) {
+      return res.status(404).json({error: 'No such location'})
+  }
+
+  return res.status(200).json(location)
+}
+
 module.exports = {
   getLocations,
   getLocation,
-  createLocation
+  createLocation,
+  deleteLocation
 }
