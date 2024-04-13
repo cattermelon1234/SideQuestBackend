@@ -5,6 +5,8 @@ const mongoose = require('mongoose')
 const userRoutes = require('./routes/users')
 const locationRoutes = require('./routes/locations')
 
+const axios = require('axios')
+
 // express app
 const app = express()
 

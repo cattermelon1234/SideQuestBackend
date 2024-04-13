@@ -1,3 +1,5 @@
+
+
 const axios = require('axios')
 
 let idArray = [
@@ -31,12 +33,12 @@ let idArray = [
 
 const data = {
     placeId: ""
-  }
-for (let i = 0; i < idArray.length; i++) {
-data.placeId = idArray[i]
-try {
-    axios.post('http://localhost:4000/api/locations/', data)
-} catch (error) {
-    console.log({error: error.message})
 }
+for (let i = 0; i < idArray.length; i++) {
+    data.placeId = idArray[i]
+    try {
+        axios.post('http://localhost:4000/api/locations/', data)
+    } catch (error) {
+        console.log({error: error.message})
+    }
 }
