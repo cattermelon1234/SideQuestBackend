@@ -11,20 +11,16 @@ const locationSchema = new Schema({
         type: String,
         required: true
     },
-    longitude: {
+    latitude: {
         type: Number,
         required: false
     },
-    latitude: {
+    longitude: {
         type: Number,
         required: false
     },
     address: {
         type: String,
-        required: false
-    },
-    rating: {
-        type: Number,
         required: false
     }
 })
