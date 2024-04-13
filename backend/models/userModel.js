@@ -8,11 +8,11 @@ const userSchema = new Schema({
         required: true
     },
     friends: {
-        type: SVGStringList,
+        type: String,
         required: true
     },
     locations: {
-        type: SVGStringList,
+        type: String,
         required: true
     }
 }, {timestamps: true})
