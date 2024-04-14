@@ -8,11 +8,11 @@ const userSchema = new Schema({
         required: true
     },
     friends: {
-        type: String,
+        type: [String],
         required: true
     },
     locations: {
-        type: String,
+        type: [String],
         required: true
     }
 }, {timestamps: true})
