@@ -1,7 +1,6 @@
 const Location = require('../models/locationModel')
 const mongoose = require('mongoose')
 const axios = require("axios");
-const API_KEY = 'AIzaSyCqvyCAlJHu44Po6CHow_459F1fjJ49u4E'
 
 //get all locations
 const getLocations = async(req, res) => {
@@ -30,9 +29,9 @@ const getLocation = async(req, res) => {
 const createLocation = async(req, res) => {
   const {placeId} = req.body
 
-  const coordinates = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=location&key=' + API_KEY)
-  const addressFormatted = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=formattedAddress&key=' + API_KEY)
-  const nameData = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=displayName&key=' + API_KEY)
+  const coordinates = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=location&key=' + process.env.API_KEY)
+  const addressFormatted = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=formattedAddress&key=' + process.env.API_KEY)
+  const nameData = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=displayName&key=' + process.env.API_KEY)
 
   const name = nameData.data.displayName.text
   const address = addressFormatted.data.formattedAddress
