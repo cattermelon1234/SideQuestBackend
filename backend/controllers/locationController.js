@@ -28,7 +28,8 @@ const getLocation = async(req, res) => {
 
 // create new location
 const createLocation = async(req, res) => {
-  const {placeId} = req.body
+  const {placeId, weekly} = req.body
+  var points = 10;
 
   const coordinates = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=location&key=' + API_KEY)
   const addressFormatted = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=formattedAddress&key=' + API_KEY)
@@ -40,7 +41,11 @@ const createLocation = async(req, res) => {
   const longitude = coordinates.data.location.longitude
 
   try {
-    const location = await Location.create({name, placeId, latitude, longitude, address})
+      
+    if (weekly == true) {
+      points = 5;
+    }
+    const location = await Location.create({name, placeId, latitude, longitude, address, weekly, points})
     console.log(latitude)
     console.log(longitude)
     res.status(200).json(location)

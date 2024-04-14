@@ -5,7 +5,11 @@ const {
   getUsers,
   getUser,
   deleteUser,
-  updateUser
+  addUserFriend,
+  removeUserFriend,
+  updateUserLocation,
+  updateUserPoints,
+  updateUserName,
 } = require('../controllers/userController')       // importing all functions
 
 //creates an instance of the router
@@ -24,7 +28,15 @@ router.post('/', createUser)
 router.delete('/:id', deleteUser)
 
 // UPDATE a new workout
-router.patch('/:id', updateUser)
+router.patch('/addUserFriend/:id', addUserFriend)
+
+router.patch('/removeUserFriend/:id', removeUserFriend)
+
+router.patch('/updateUserLocation/:id', updateUserLocation)
+
+router.patch('/updateUserPoints/:id', updateUserPoints)
+
+router.patch('/updateUserName/:id', updateUserName)
 
 //we export the router at the end
 module.exports = router

@@ -7,14 +7,12 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    friends: {
-        type: String,
-        required: true
+    points: {
+        type: Number,
+        required: false
     },
-    locations: {
-        type: String,
-        required: true
-    }
+    friends: [String],
+    locations: [String]
 }, {timestamps: true})
 
 module.exports = mongoose.model('User', userSchema)
