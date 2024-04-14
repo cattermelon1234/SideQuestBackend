@@ -101,7 +101,6 @@ const updateUserLocation = async(req, res) => {
 const updateUserPoints = async(req, res) => {
   const {id} = req.params
   const locationId = req.body.locationId
-  var points
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such user'})
@@ -109,20 +108,13 @@ const updateUserPoints = async(req, res) => {
   if (!mongoose.Types.ObjectId.isValid(locationId)) {
     return res.status(404).json({error: 'No such location'})
   }
+  
 
-  Location.findById(locationId, function (err, docs) {
-    if (err){
-        console.log(err);
-    }
-    else{
-        points = docs.points
-    }
-  });
+  foundLocation = await Location.findById(locationId) 
+  const points = foundLocation.points
+  console.log(points)
 
-  user = User.updateOne({ _id: id }, { $inc: { points: points } })
-    .catch((err) => {
-      console.log(err)
-  }); 
+  user = await User.updateOne({ _id: id }, { $inc: { points: points } })
 
   if (!user) {
     return res.status(404).json({error: 'No such user'})
@@ -132,15 +124,12 @@ const updateUserPoints = async(req, res) => {
 
 const updateUserName = async(req, res) => {
   const {id} = req.params
-  const {name} = req.body
+  const name = req.body.name
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such user'})
   }
 
-  user = User.updateOne({ _id: id }, { name: name } )
-    .catch((err) => {
-      console.log(err)
-  }); 
+  user = await User.updateOne({ _id: id }, { name: name } )
   
   if (!user) {
     return res.status(404).json({error: 'No such user'})
