@@ -18,10 +18,10 @@ const {
 const router = express.Router()
 
 // GET ALL USERS
-//router.get('/', getUsers)
+router.get('/', getUsers)
 
 // GET a single workout
-//router.get('/:id', getUser)
+router.get('/:id', getUser)
 
 router.post('/', createUser)
 router.delete('/:id', deleteUser)
