@@ -52,7 +52,6 @@ const createLocation = async(req, res) => {
 
 
  try {
-    
    if (weekly == true) {
      points = 5;
    }
