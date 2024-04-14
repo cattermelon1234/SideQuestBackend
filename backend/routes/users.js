@@ -25,7 +25,6 @@ router.get('/', getUsers)
 
 // GET a single workout
 router.get('/:id', getUser)
-<<<<<<< Updated upstream
 
 router.get('/getWeeklyQuests/:id', getWeeklyQuests)
 
@@ -34,8 +33,6 @@ router.get('/getRemainingQuests/:id', getRemainingQuests)
 router.get('/getDistance/:latitude/:longitude/:locationId', getDistance)
 
 router.post('/getClosestLocations', getClosestLocations)
-=======
->>>>>>> Stashed changes
 
 router.post('/', createUser)
 router.delete('/:id', deleteUser)
