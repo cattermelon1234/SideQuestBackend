@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const cors = require('cors')
 const mongoose = require('mongoose')
 const userRoutes = require('./routes/users')
 const locationRoutes = require('./routes/locations')
@@ -23,6 +24,7 @@ app.use(function (req, res, next) {
 
 // routes
 app.use(express.json());
+app.use(cors())
 app.use('/api/users', userRoutes)
 app.use('/api/locations', locationRoutes)
 app.use('/api/images', imageRoutes)

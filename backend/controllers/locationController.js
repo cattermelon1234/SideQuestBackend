@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const Location = require('../models/locationModel')
+const User = require('../models/userModel')
 const mongoose = require('mongoose')
 const axios = require("axios");
 
@@ -9,7 +10,6 @@ const getLocations = async(req, res) => {
  const locations = await Location.find({})
  res.status(200).json(locations)
 }
-
 
 //get a single location
 const getLocation = async(req, res) => {
@@ -21,7 +21,7 @@ const getLocation = async(req, res) => {
  }
 
 
- const location = await Location.findById(id)
+ const location = await Location.find({userId: id})
 
 
  if (!location) {
@@ -84,10 +84,27 @@ const deleteLocation = async(req, res) => {
  return res.status(200).json(location)
 }
 
+const getLocationPercentage = async(req, res) => {
+  const { id } = req.params
+
+  const locations = await axios.get('http://localhost:4000/api/locations/')
+  const userLocations = await axios.get('http://localhost:4000/api/locations/' + id)
+
+  if (!locations || !userLocations) {
+    return res.status(404).json({error: 'No such locations'})
+  }
+
+  const percent = Math.round(userLocations.data.length / locations.data.length * 100)
+
+  return res.status(200).json(percent)
+
+}
+
 
 module.exports = {
  getLocations,
  getLocation,
  createLocation,
- deleteLocation
+ deleteLocation,
+ getLocationPercentage
 }

@@ -4,6 +4,10 @@ const {
   createUser,
   getUsers,
   getUser,
+  getWeeklyQuests,
+  getRemainingQuests,
+  getDistance,
+  getClosestLocations,
   deleteUser,
   addUserFriend,
   removeUserFriend,
@@ -21,6 +25,14 @@ router.get('/', getUsers)
 
 // GET a single workout
 router.get('/:id', getUser)
+
+router.get('/getWeeklyQuests/:id', getWeeklyQuests)
+
+router.get('/getRemainingQuests/:id', getRemainingQuests)
+
+router.post('/getDistance', getDistance)
+
+router.post('/getClosestLocations', getClosestLocations)
 
 router.post('/', createUser)
 router.delete('/:id', deleteUser)
