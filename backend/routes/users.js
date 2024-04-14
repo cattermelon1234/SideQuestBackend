@@ -8,7 +8,6 @@ const {
   addUserFriend,
   removeUserFriend,
   updateUserLocation,
-  updateUserPoints,
   updateUserName,
   loginUser,
   signupUser
@@ -32,8 +31,6 @@ router.patch('/addUserFriend/:id', addUserFriend)
 router.patch('/removeUserFriend/:id', removeUserFriend)
 
 router.patch('/updateUserLocation/:id', updateUserLocation)
-
-router.patch('/updateUserPoints/:id', updateUserPoints)
 
 router.patch('/updateUserName/:id', updateUserName)
 // POST a new workout

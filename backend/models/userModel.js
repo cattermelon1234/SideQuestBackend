@@ -10,6 +10,10 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
+    points: {
+        type: Number,
+        required: true
+    },
     friends: {
         type: [String],
         required: true
@@ -52,10 +56,11 @@ userSchema.statics.signup = async function(name, email, password) {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    const temp = []
-    const temp2 = []
+    const points = 0;
+    const friends = []
+    const locations = []
 
-    const user = await this.create({ name, friends: temp, locations: temp2, email, password: hash})
+    const user = await this.create({ name, points, friends: friends, locations: locations, email, password: hash})
 
     return user
 }

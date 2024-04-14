@@ -22,6 +22,14 @@ const locationSchema = new Schema({
     address: {
         type: String,
         required: false
+    },
+    weekly: {
+        type: Boolean,
+        required: true
+    },
+    points: {
+        type: Number,
+        required: false
     }
 })
 
