@@ -209,8 +209,7 @@ const removeUserFriend = async(req, res) => {
 }
 
 const updateUserLocation = async(req, res) => {
-  const {id} = req.params
-  const locationId = req.body.locationId
+  const {id, locationId} = req.params
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such user'})
   }

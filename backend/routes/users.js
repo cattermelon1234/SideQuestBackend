@@ -42,7 +42,7 @@ router.patch('/addUserFriend/:id', addUserFriend)
 
 router.patch('/removeUserFriend/:id', removeUserFriend)
 
-router.patch('/updateUserLocation/:id', updateUserLocation)
+router.patch('/updateUserLocation/:id/:locationId', updateUserLocation)
 
 router.patch('/updateUserName/:id', updateUserName)
 // POST a new workout
