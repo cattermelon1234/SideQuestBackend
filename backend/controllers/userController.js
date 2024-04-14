@@ -6,6 +6,10 @@ const mongoose = require('mongoose')
 const axios = require("axios");
 
 const jwt = require('jsonwebtoken')
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 const getUsers = async(req, res) => {
   const users = await User.find({})
   res.status(200).json(users)
@@ -208,13 +212,36 @@ const removeUserFriend = async(req, res) => {
 }
 
 const updateUserLocation = async(req, res) => {
+<<<<<<< Updated upstream
   const {id, locationId} = req.params
+=======
+  const {id} = req.params
+  const locationId = req.body.id
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({error: 'No such user'})
+  }
+
+  const user = await User.updateOne({ _id: id }, { $push: { locations: locationId } });
+
+  if (!user) {
+    return res.status(404).json({error: 'No such location to remove'})
+  }
+  res.status(200).json(user)
+}
+
+const updateUserPoints = async(req, res) => {
+  const {id} = req.params
+  const locationId = req.body.locationId
+  var pts;
+
+>>>>>>> Stashed changes
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such user'})
   }
   if (!mongoose.Types.ObjectId.isValid(locationId)) {
     return res.status(404).json({error: 'No such location'})
   }
+<<<<<<< Updated upstream
 
   myUser = await User.findById(id)
   const locationArray = myUser.locations
@@ -223,6 +250,18 @@ const updateUserLocation = async(req, res) => {
     if (locationId.localeCompare(locationArray[i]) == 0) {
       return res.status(404).json({error: 'location already exists!'})
     }
+=======
+  
+  foundLocation = Location.findById(locationId) 
+  console.log()
+
+  console.log(5)
+
+  user = await User.updateOne({ _id: id }, { $inc: { points: foundLocation.points } })
+
+  if (!user) {
+    return res.status(404).json({error: 'No such user'})
+>>>>>>> Stashed changes
   }
 
   user = await User.updateOne({ _id: id }, { $push: { locations: locationId } });
@@ -245,8 +284,13 @@ const updateUserName = async(req, res) => {
     return res.status(404).json({error: 'No such user'})
   }
 
+<<<<<<< Updated upstream
   user = User.updateOne({ _id: id }, { name: name } )
   
+=======
+  user = await User.updateOne({ _id: id }, { name: name } )
+  console.log(user)
+>>>>>>> Stashed changes
   if (!user) {
     return res.status(404).json({error: 'No such user'})
   }

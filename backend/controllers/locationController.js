@@ -15,19 +15,20 @@ const getLocations = async(req, res) => {
 const getLocation = async(req, res) => {
  const { id } = req.params
 
-
  if (!mongoose.Types.ObjectId.isValid(id)) {
    return res.status(404).json({error: 'No such location'})
  }
 
+<<<<<<< Updated upstream
 
  const location = await Location.find({_id: id})
-
+=======
+ const location = await Location.findById(id)
+>>>>>>> Stashed changes
 
  if (!location) {
    return res.status(404).json({error: 'No such location'})
  }
-
 
  return res.status(200).json(location)
 }
