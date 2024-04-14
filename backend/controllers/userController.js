@@ -25,6 +25,54 @@ const getUser = async(req, res) => {
   res.status(200).json(user)
 }
 
+const getWeeklyQuests = async(req, res) => {
+  const {id} = req.params
+  const user = await User.findById(id)
+  const locations = await Location.find({weekly: true})
+  var visited = user.locations
+  var willAdd = true
+  var quests = []
+
+  for (var i = 0; i < locations.length; ++i) {
+    for (var j = 0; j < visited.length; ++j) {
+      if (visited[j].localeCompare(locations[i]) == 0) {
+        willAdd = false
+      }
+    }
+    if (willAdd && quests.length < 3) {
+      quests.push(locations[i]);
+    }
+    if (quests.length >= 3) {
+      break;
+    }
+    willAdd = true
+  }
+  res.status(200).json(quests)
+}
+
+const getRemainingQuests = async(req, res) => {
+  const {id} = req.params
+  const user = await User.findById(id)
+  const locations = await Location.find({weekly: false})
+  var visited = user.locations
+  var willAdd = true
+  var quests = []
+
+  for (var i = 0; i < locations.length; ++i) {
+    for (var j = 0; j < visited.length; ++j) {
+      if (visited[j].localeCompare(locations[i]) == 0) {
+        willAdd = false
+      }
+    }
+    if (willAdd) {
+      quests.push(locations[i]);
+    }
+    willAdd = true
+  }
+  res.status(200).json(quests)
+}
+
+
 const getDistance = async(req, res) => {
   const latitude = req.body.latitude
   const longitude = req.body.longitude
@@ -253,6 +301,8 @@ module.exports = {
   updateUserLocation,
   updateUserName,
   getDistance,
+  getWeeklyQuests,
+  getRemainingQuests,
   getClosestLocations,
   loginUser,
   signupUser

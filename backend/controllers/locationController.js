@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const Location = require('../models/locationModel')
+const User = require('../models/userModel')
 const mongoose = require('mongoose')
 const axios = require("axios");
 
@@ -9,7 +10,6 @@ const getLocations = async(req, res) => {
  const locations = await Location.find({})
  res.status(200).json(locations)
 }
-
 
 //get a single location
 const getLocation = async(req, res) => {
