@@ -8,13 +8,7 @@ const {
   addUserFriend,
   removeUserFriend,
   updateUserLocation,
-  updateUserPoints,
   updateUserName,
-  //createUser,
-  //getUsers,
-  //getUser,
-  //deleteUser,
-  //updateUser,
   loginUser,
   signupUser
 } = require('../controllers/userController')       // importing all functions
@@ -23,10 +17,10 @@ const {
 const router = express.Router()
 
 // GET ALL USERS
-//router.get('/', getUsers)
+router.get('/', getUsers)
 
 // GET a single workout
-//router.get('/:id', getUser)
+router.get('/:id', getUser)
 
 router.post('/', createUser)
 router.delete('/:id', deleteUser)
@@ -37,8 +31,6 @@ router.patch('/addUserFriend/:id', addUserFriend)
 router.patch('/removeUserFriend/:id', removeUserFriend)
 
 router.patch('/updateUserLocation/:id', updateUserLocation)
-
-router.patch('/updateUserPoints/:id', updateUserPoints)
 
 router.patch('/updateUserName/:id', updateUserName)
 // POST a new workout

@@ -3,7 +3,7 @@ const Location = require('../models/locationModel')
 const mongoose = require('mongoose')
 
 const jwt = require('jsonwebtoken')
-/*const getUsers = async(req, res) => {
+const getUsers = async(req, res) => {
   const users = await User.find({})
   res.status(200).json(users)
 }
@@ -23,7 +23,6 @@ const getUser = async(req, res) => {
 }
 
 const createUser = async(req, res) => {
-  console.log("trying to create a user")
   const {name} = req.body
   const points = 0;
   const friends = [];
@@ -52,20 +51,25 @@ const deleteUser = async(req, res) => {
 const addUserFriend = async(req, res) => {
   const {id} = req.params
   const friendId = req.body.id
-  console.log(friendId)
-  console.log(id)
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such user'})
   }
+  myUser = await User.findById(id)
+  const friendArray = myUser.friends
 
-
+  for(var i = 0; i < friendArray.length; ++i) { 
+    if (friendId.localeCompare(friendArray[i]) == 0) {
+      return res.status(404).json({error: 'user is already a friend!'})
+    }
+  }
   const user = await User.updateOne({ _id: id }, { $push: { friends: friendId} });
+  foundUser = await User.findById(id)
 
-  if (!user) {
+  if (!foundUser) {
     return res.status(404).json({error: 'No such user'})
   }
-  res.status(200).json(user)
+  res.status(200).json(foundUser)
 }
 
 const removeUserFriend = async(req, res) => {
@@ -77,50 +81,44 @@ const removeUserFriend = async(req, res) => {
   }
 
   const user = await User.updateOne({ _id: id }, { $pull: { friends: friendId} });
+  foundUser = await User.findById(id)
 
-  if (!user) {
+  if (!foundUser) {
     return res.status(404).json({error: 'No such user'})
   }
-  res.status(200).json(user)
+  res.status(200).json(foundUser)
 }
 
 const updateUserLocation = async(req, res) => {
   const {id} = req.params
-  const locationId = req.body.id
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such user'})
-  }
-
-  const user = await User.updateOne({ _id: id }, { $push: { locations: locationId } });
-
-  if (!user) {
-    return res.status(404).json({error: 'No such location to remove'})
-  }
-  res.status(200).json(user)
-}
-
-const updateUserPoints = async(req, res) => {
-  const {id} = req.params
   const locationId = req.body.locationId
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such user'})
   }
   if (!mongoose.Types.ObjectId.isValid(locationId)) {
     return res.status(404).json({error: 'No such location'})
   }
-  
 
-  foundLocation = await Location.findById(locationId) 
-  const points = foundLocation.points
-  console.log(points)
+  myUser = await User.findById(id)
+  const locationArray = myUser.locations
 
-  user = await User.updateOne({ _id: id }, { $inc: { points: points } })
-
-  if (!user) {
-    return res.status(404).json({error: 'No such user'})
+  for(var i = 0; i < locationArray.length; ++i) { 
+    if (locationId.localeCompare(locationArray[i]) == 0) {
+      return res.status(404).json({error: 'location already exists!'})
+    }
   }
-  res.status(200).json(user)
+
+  user = await User.updateOne({ _id: id }, { $push: { locations: locationId } });
+  foundLocation = await Location.findById(locationId) 
+  const pts = foundLocation.points
+
+  user = await User.updateOne({ _id: id }, { $inc: { 'points': pts } })
+  foundUser = await User.findById(id)
+
+  if (!foundUser) {
+    return res.status(404).json({error: 'No such location to remove'})
+  }
+  res.status(200).json(foundUser)
 }
 
 const updateUserName = async(req, res) => {
@@ -130,13 +128,13 @@ const updateUserName = async(req, res) => {
     return res.status(404).json({error: 'No such user'})
   }
 
-  user = await User.updateOne({ _id: id }, { name: name } )
+  user = User.updateOne({ _id: id }, { name: name } )
   
   if (!user) {
     return res.status(404).json({error: 'No such user'})
   }
   res.status(200).json(user)
-}*/
+}
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, {expiresIn: '3d'})
@@ -184,7 +182,6 @@ module.exports = {
   addUserFriend,
   removeUserFriend,
   updateUserLocation,
-  updateUserPoints,
   updateUserName,
   loginUser,
   signupUser
