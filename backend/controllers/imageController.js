@@ -23,7 +23,7 @@ const getLocationImages = async(req, res) => {
     const {id} = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'No such images'})
+        return res.status(404).json({error: 'No such images not valid'})
     } 
     const images = await Image.find({locationId: id})
     if (!images) {
@@ -34,6 +34,13 @@ const getLocationImages = async(req, res) => {
 
 const createImage = async(req, res) => {
     const {userId, locationId, file} = req.body
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(404).json({error: 'No such user'})
+    } 
+    if (!mongoose.Types.ObjectId.isValid(locationId)) {
+        return res.status(404).json({error: 'No such location'})
+    } 
 
     try {
         const image = await Image.create({userId, locationId, file})
