@@ -21,7 +21,7 @@ const getLocation = async(req, res) => {
  }
 
 
- const location = await Location.find({userId: id})
+ const location = await Location.find({_id: id})
 
 
  if (!location) {

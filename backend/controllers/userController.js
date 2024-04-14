@@ -70,11 +70,11 @@ const getRemainingQuests = async(req, res) => {
   res.status(200).json(quests)
 }
 
-
 const getDistance = async(req, res) => {
-  const latitude = req.body.latitude
-  const longitude = req.body.longitude
-  const locationId = req.body.locationId
+  
+  const latitude = req.params.latitude
+  const longitude = req.params.longitude
+  const locationId = req.params.locationId
 
   if (!mongoose.Types.ObjectId.isValid(locationId)) {
     return res.status(404).json({error: 'No such location'})

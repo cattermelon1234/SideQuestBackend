@@ -30,7 +30,7 @@ router.get('/getWeeklyQuests/:id', getWeeklyQuests)
 
 router.get('/getRemainingQuests/:id', getRemainingQuests)
 
-router.post('/getDistance', getDistance)
+router.get('/getDistance/:latitude/:longitude/:locationId', getDistance)
 
 router.post('/getClosestLocations', getClosestLocations)
 
