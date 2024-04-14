@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 const userRoutes = require('./routes/users')
 const locationRoutes = require('./routes/locations')
 const imageRoutes = require('./routes/images')
-const cors = require('cors');
 
 const axios = require('axios')
 
