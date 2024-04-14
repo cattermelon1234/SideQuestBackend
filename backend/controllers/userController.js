@@ -30,22 +30,13 @@ const getWeeklyQuests = async(req, res) => {
   const user = await User.findById(id)
   const locations = await Location.find({weekly: true})
   var visited = user.locations
-  var willAdd = true
   var quests = []
 
-  for (var i = 0; i < locations.length; ++i) {
-    for (var j = 0; j < visited.length; ++j) {
-      if (visited[j].localeCompare(locations[i]) == 0) {
-        willAdd = false
-      }
+  while (quests.length < 3) {
+    const x = Math.floor(Math.random() * locations.length)
+    if (!visited.includes(locations[x]) && !quests.includes(locations[x])) {
+      quests.push(locations[x])
     }
-    if (willAdd && quests.length < 3) {
-      quests.push(locations[i]);
-    }
-    if (quests.length >= 3) {
-      break;
-    }
-    willAdd = true
   }
   res.status(200).json(quests)
 }
