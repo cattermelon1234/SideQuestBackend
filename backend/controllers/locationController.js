@@ -19,12 +19,8 @@ const getLocation = async(req, res) => {
    return res.status(404).json({error: 'No such location'})
  }
 
-<<<<<<< Updated upstream
 
  const location = await Location.find({_id: id})
-=======
- const location = await Location.findById(id)
->>>>>>> Stashed changes
 
  if (!location) {
    return res.status(404).json({error: 'No such location'})
