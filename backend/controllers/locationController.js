@@ -88,13 +88,15 @@ const getLocationPercentage = async(req, res) => {
   const { id } = req.params
 
   const locations = await axios.get('http://localhost:4000/api/locations/')
-  const userLocations = await axios.get('http://localhost:4000/api/locations/' + id)
+  const userLocations = await axios.get('http://localhost:4000/api/users/getRemainingQuests/' + id)
 
   if (!locations || !userLocations) {
     return res.status(404).json({error: 'No such locations'})
   }
 
-  const percent = Math.round(userLocations.data.length / locations.data.length * 100)
+  const percent = 100 - Math.round(userLocations.data.length * 100.0 / (locations.data.length))
+
+  console.log(userLocations.data);
 
   return res.status(200).json(percent)
 
