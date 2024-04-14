@@ -10,11 +10,6 @@ const {
   updateUserLocation,
   updateUserPoints,
   updateUserName,
-  //createUser,
-  //getUsers,
-  //getUser,
-  //deleteUser,
-  //updateUser,
   loginUser,
   signupUser
 } = require('../controllers/userController')       // importing all functions
@@ -32,7 +27,6 @@ router.post('/', createUser)
 router.delete('/:id', deleteUser)
 
 // UPDATE a new workout
-router.patch('/:id', updateUser)
 router.patch('/addUserFriend/:id', addUserFriend)
 
 router.patch('/removeUserFriend/:id', removeUserFriend)
@@ -43,13 +37,10 @@ router.patch('/updateUserPoints/:id', updateUserPoints)
 
 router.patch('/updateUserName/:id', updateUserName)
 // POST a new workout
-//router.post('/', createUser)
+router.post('/', createUser)
 
 // DELETE a new workout
-//router.delete('/:id', deleteUser)
-
-// UPDATE a new workout
-//router.patch('/:id', updateUser)
+router.delete('/:id', deleteUser)
 
 // login route
 router.post('/login', loginUser)
