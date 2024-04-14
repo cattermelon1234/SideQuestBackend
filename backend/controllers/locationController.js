@@ -4,7 +4,6 @@ const Location = require('../models/locationModel')
 const mongoose = require('mongoose')
 const axios = require("axios");
 
-
 //get all locations
 const getLocations = async(req, res) => {
  const locations = await Location.find({})
@@ -39,10 +38,9 @@ const createLocation = async(req, res) => {
  const {placeId, weekly} = req.body
  var points = 10;
 
-
- const coordinates = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=location&key=' + API_KEY)
- const addressFormatted = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=formattedAddress&key=' + API_KEY)
- const nameData = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=displayName&key=' + API_KEY)
+  const coordinates = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=location&key=' + process.env.API_KEY)
+  const addressFormatted = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=formattedAddress&key=' + process.env.API_KEY)
+  const nameData = await axios.get('https://places.googleapis.com/v1/places/' + placeId + '?fields=displayName&key=' + process.env.API_KEY)
 
 
  const name = nameData.data.displayName.text
