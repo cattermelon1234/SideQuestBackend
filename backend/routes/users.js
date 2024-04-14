@@ -32,7 +32,6 @@ router.post('/', createUser)
 router.delete('/:id', deleteUser)
 
 // UPDATE a new workout
-router.patch('/:id', updateUser)
 router.patch('/addUserFriend/:id', addUserFriend)
 
 router.patch('/removeUserFriend/:id', removeUserFriend)
