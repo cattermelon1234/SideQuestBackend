@@ -72,10 +72,8 @@ const getRemainingQuests = async(req, res) => {
 
 const getDistance = async(req, res) => {
   
-  const latitude = req.params.latitude
-  const longitude = req.params.longitude
-  const locationId = req.params.locationId
-
+  const {latitude, longitude, locationId} = req.params
+  
   if (!mongoose.Types.ObjectId.isValid(locationId)) {
     return res.status(404).json({error: 'No such location'})
   }
@@ -88,6 +86,7 @@ const getDistance = async(req, res) => {
   const response = await axios.get('https://maps.googleapis.com/maps/api/distancematrix/json?destinations=' 
   + dest_latitude + ',' + dest_longitude + '&mode=walking&origins=' + latitude + ',' + longitude + '&key=' + process.env.API_KEY)
   console.log(response)
+
   console.log(response.data.rows[0].elements[0])
   const distance = response.data.rows[0].elements[0].distance.text
   
