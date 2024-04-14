@@ -3,7 +3,7 @@ const Location = require('../models/locationModel')
 const mongoose = require('mongoose')
 
 const jwt = require('jsonwebtoken')
-/*const getUsers = async(req, res) => {
+const getUsers = async(req, res) => {
   const users = await User.find({})
   res.status(200).json(users)
 }
@@ -136,7 +136,7 @@ const updateUserName = async(req, res) => {
     return res.status(404).json({error: 'No such user'})
   }
   res.status(200).json(user)
-}*/
+}
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, {expiresIn: '3d'})
