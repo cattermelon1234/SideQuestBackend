@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const axios = require("axios");
 
 const jwt = require('jsonwebtoken')
+
 const getUsers = async(req, res) => {
   const users = await User.find({})
   res.status(200).json(users)
@@ -209,34 +210,17 @@ const removeUserFriend = async(req, res) => {
 
 const updateUserLocation = async(req, res) => {
   const {id} = req.params
-  const locationId = req.body.locationId
+  const locationId = req.body.id
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such user'})
   }
-  if (!mongoose.Types.ObjectId.isValid(locationId)) {
-    return res.status(404).json({error: 'No such location'})
-  }
 
-  myUser = await User.findById(id)
-  const locationArray = myUser.locations
+  const user = await User.updateOne({ _id: id }, { $push: { locations: locationId } });
 
-  for(var i = 0; i < locationArray.length; ++i) { 
-    if (locationId.localeCompare(locationArray[i]) == 0) {
-      return res.status(404).json({error: 'location already exists!'})
-    }
-  }
-
-  user = await User.updateOne({ _id: id }, { $push: { locations: locationId } });
-  foundLocation = await Location.findById(locationId) 
-  const pts = foundLocation.points
-
-  user = await User.updateOne({ _id: id }, { $inc: { 'points': pts } })
-  foundUser = await User.findById(id)
-
-  if (!foundUser) {
+  if (!user) {
     return res.status(404).json({error: 'No such location to remove'})
   }
-  res.status(200).json(foundUser)
+  res.status(200).json(user)
 }
 
 const updateUserName = async(req, res) => {
