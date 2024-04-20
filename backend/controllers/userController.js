@@ -80,15 +80,15 @@ const getDistance = async(req, res) => {
   }
 
   foundLocation = await Location.findById(locationId) 
-  console.log(foundLocation)
+  // console.log(foundLocation)
   const dest_latitude = foundLocation.latitude
   const dest_longitude = foundLocation.longitude
 
   const response = await axios.get('https://maps.googleapis.com/maps/api/distancematrix/json?destinations=' 
   + dest_latitude + ',' + dest_longitude + '&mode=walking&origins=' + latitude + ',' + longitude + '&key=' + process.env.API_KEY)
-  console.log(response)
+  // console.log(response)
 
-  console.log(response.data.rows[0].elements[0])
+  // console.log(response.data.rows[0])
   const distance = response.data.rows[0].elements[0].distance.text
   
   arr = distance.split(" ")
